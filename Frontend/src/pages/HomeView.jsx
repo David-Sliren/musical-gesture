@@ -3,11 +3,13 @@ import { usePlayerStore } from "../store/usePlayerStore";
 import { tracks } from "../data/mockTracks";
 import { motion } from "motion/react";
 import { Track } from "../components/Track";
+import { useNavigate } from "react-router";
 
 export const HomeView = () => {
   const playTrack = usePlayerStore((state) => state.playTrack);
   const currentTrack = usePlayerStore((state) => state.currentTrack);
   const isPlaying = usePlayerStore((state) => state.isPlaying);
+  const navigate = useNavigate();
 
   return (
     <div className="w-full pb-32 pb-40">
@@ -26,10 +28,13 @@ export const HomeView = () => {
 
           return (
             <Track
+              key={track.id + idx}
               track={track}
               index={idx}
               isCurrent={isCurrentlyPlaying}
-              handler={() => playTrack(track)}
+              handler={() => {
+                (playTrack(track), navigate("/player"));
+              }}
             />
           );
         })}

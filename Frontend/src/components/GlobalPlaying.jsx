@@ -2,37 +2,33 @@ import { motion } from "motion/react";
 import { usePlayerStore } from "../store/usePlayerStore";
 import YouTube from "react-youtube";
 import { useRef } from "react";
+import { PlayList } from "../data/usePlayList";
+import { tracks } from "../data/mockTracks";
 
 const GlobalPlaying = () => {
   const currentTrack = usePlayerStore((state) => state.currentTrack);
   const setPlayer = usePlayerStore((state) => state.setPlayer);
-  //   const currentTime = usePlayerStore((state) => state.setPlayer);
-  const setCurrentTime = usePlayerStore((state) => state.setCurrentTime);
-  const intervalRef = useRef(null);
+  const setStateChange = usePlayerStore((state) => state.setStateChange);
 
   if (!currentTrack) return null;
 
-  //   console.log("player: ", player);
-
   const onPlayerReady = (event) => {
-    // event.target;
-    // event.target;
-    console.log("event.target: ", event.target);
     setPlayer(event.target);
-    console.log("event.target: ", event.target.getVideoData());
-    console.log("el tiempo que va: ", event.target.getCurrentTime());
-
-    console.log("cuanto dura: ", event.target.getDuration());
   };
 
-  const handlePlay = (event) => {
-    intervalRef.current = setInterval(() => {
-      setCurrentTime(event.target.getCurrentTime());
-    }, 1000);
-  };
-
-  const handleStop = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
+  const onshange = (event) => {
+    if (event.data === 2) {
+      const videoid = event.target?.getVideoData().video_id;
+      if (currentTrack.id === videoid) {
+        return console.log("hola");
+      }
+      console.log("videoid: ", videoid);
+      console.log("currentTrack.id: ", currentTrack.id);
+      // console.log("si: ", event.target.getPlaylist());
+      // const findId = tracks.find((item) => item.id === videoid);
+      // setStateChange(findId);
+    }
+    // setPlayer(event.target);
   };
 
   return (
@@ -48,10 +44,11 @@ const GlobalPlaying = () => {
           playerVars: {
             autoplay: 1,
             controls: 0,
+            playlist: PlayList,
           },
         }}
         onReady={onPlayerReady}
-        // onStateChange={onPlayerStateChange}
+        onStateChange={onshange}
       />
     </motion.div>
   );

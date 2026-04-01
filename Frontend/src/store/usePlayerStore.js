@@ -8,33 +8,46 @@ export const usePlayerStore = create((set, get) => ({
   playList: [],
   duration: 0,
   currentTime: 0,
-  lastGesture: null, // Para futura integración de gestos (e.g., 'swipe-left', 'swipe-right')
+  lastGesture: null,
+  videoId: "aa", // Para futura integración de gestos (e.g., 'swipe-left', 'swipe-right')
 
   // Acciones
   playTrack: (track) => set({ currentTrack: track, isPlaying: true }),
+  setPlayer: (player) =>
+    set({
+      player,
+      duration: player.getDuration(),
+      currentTime: player.getCurrentTime(),
+    }),
+  setStateChange: (stateChange) =>
+    set({
+      currentTrack: {
+        id: stateChange.id,
+        title: stateChange.title,
+        artist: stateChange.artist,
+        cover: stateChange.cover,
+      },
+    }),
 
-  setPlayer: (player) => set({ player, duration: player.getDuration }),
+  // cambios
   setIsPlaying: (playing) => set({ isPlaying: playing }),
-  pause: () =>
-    set((state) => {
-      state.player?.pauseVideo();
-      return { isPlaying: false };
-    }),
-  play: () =>
-    set((state) => {
-      state.player.playVideo();
-      return { isPlaying: true };
-    }),
+  pause: () => {
+    (get().player?.pauseVideo(), set({ isPlaying: false }));
+  },
+  play: () => {
+    (get().player?.playVideo(), set({ isPlaying: true }));
+  },
   previous: () =>
     set((state) => {
-      state.player.previousVideo();
-      return {};
+      state.player?.previousVideo();
+      return { currentTime: 0, duration: state.player?.getDuration() };
     }),
   next: () =>
     set((state) => {
-      state.player.nextVideo();
-      return {};
+      state.player?.nextVideo();
+      return { currentTime: 0, duration: state.player?.getDuration() };
     }),
+
   setCurrentTime: (time) => set({ currentTime: time }),
   setGesture: (gesture) => set({ lastGesture: gesture }),
   clearGesture: () => set({ lastGesture: null }),

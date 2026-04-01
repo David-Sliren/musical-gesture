@@ -5,7 +5,10 @@ import { usePlayerStore } from "../store/usePlayerStore";
 import YouTube from "react-youtube";
 
 export const FloatingPlayer = () => {
-  const { currentTrack, isPlaying, pause, play } = usePlayerStore();
+  const play = usePlayerStore((state) => state.play);
+  const pause = usePlayerStore((state) => state.pause);
+  const isPlaying = usePlayerStore((state) => state.isPlaying);
+  const currentTrack = usePlayerStore((state) => state.currentTrack);
   const navigate = useNavigate();
 
   if (!currentTrack) return null;

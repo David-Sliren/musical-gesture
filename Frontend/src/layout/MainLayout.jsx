@@ -1,6 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { Sidebar } from "./Sidebar";
-import { AnimatedBackground } from "./AnimatedBackground";
 import { FloatingPlayer } from "../components/FloatingPlayer";
 import GlobalPlaying from "../components/GlobalPlaying";
 import HeaderPlaceHolder from "../components/HeaderPlaceHolder";

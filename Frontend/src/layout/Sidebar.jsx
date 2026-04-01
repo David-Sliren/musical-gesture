@@ -15,13 +15,9 @@ export const Sidebar = () => {
 
   return (
     <aside className="w-64 h-full hidden md:flex flex-col gap-8 py-10 px-6 border-r border-neutral-100 bg-white">
-      {/* Brand Logo - Minimalist text style similar to Augen Pro */}
       <div className="flex items-center gap-2 mb-4">
         <div className="flex justify-center rotate-32 items-center w-8 h-8 rounded-full bg-[#007bff] text-white flex items-center justify-center">
-          {/* Simple asterisk style icon representing future tech */}
-          {/* <span className=" text-white text-xl leading-none mt-1"> */}
           <HandMetal strokeWidth={1.5} size={19} />
-          {/* </span> */}
         </div>
         <span className="text-xl font-medium tracking-tight text-neutral-900">
           Gesture Music
